@@ -1,0 +1,17 @@
+<form action="{{ url_for('frame_create') }}" id="frame-create" method="post" ic-enhance="true" ic-target="#recent" ic-swap-style="prepend">
+    <label class="control-label" for="kind">kind</label>
+    <input class="form-control" id="kind" name="kind" type="text" placeholder="{{Kind.event}}" value="{{Kind.event}}">
+    <label class="control-label" for="name">name</label>
+    <input class="form-control" id="name" name="name" type="text" placeholder="" value="">
+    <label class="control-label" for="data">data</label>
+    <input class="form-control" id="data" name="data" type="text" placeholder='{"hello":"world"}' value="">
+    <label class="control-label" for="meta">meta</label>
+    <input class="form-control" id="meta" name="meta" type="text" placeholder='{"source":"piebus"}' value="">
+    <label class="control-label" for="pubish">pubish</label>
+    <input class="form-control" id="pubish" name="publish" type="checkbox">
+    <label class="control-label" for="render">render</label>
+    <input class="form-control" id="render" name="render" type="text" placeholder="default" value="">
+    <label class="control-label" for="tags">tags</label>
+    <input class="form-control" id="tags" name="tags" type="text" placeholder="" value="">
+    <button type="submit">Create</button>
+</form>

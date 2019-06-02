@@ -1,0 +1,26 @@
+<form action="{{ url_for('admin_settings_telegram') }}"
+      id="settings-telegram-form" method="post" ic-enhance="true" class="transition-save">
+    <h4 class="settings">Telegam Bot Settings</h4>
+    <ul>
+        <li class="formli">
+            <input class="form-control" id="telegram_bot_enable" name="telegram_bot_enable" type="checkbox"
+                   {% if telegram_bot_enable %}checked{% else%}{% endif %}>
+            <label for="telegram_bot_enable" class="control-label">Telegram bot is {% if telegram_bot_enable %}enabled{%
+                else%}disabled{% endif %}.</label>
+            <br/>
+            <label for="telegram_bot_name" class="control-label">Telegram bot name</label>
+            <input class="form-control" id="telegram_bot_name" name="telegram_bot_name" type="text" value="{{ telegram_bot_name }}">
+
+            <label for="telegram_bot_owner_username" class="control-label">Telegram owner username</label>
+            <input class="form-control" id="telegram_bot_owner_username" name="telegram_bot_owner_username" type="text" value="{{ telegram_bot_owner_username }}">
+
+            <label for="telegram_bot_owner_id" class="control-label">Telegram owner id</label>
+            <input class="form-control" id="telegram_bot_owner_id" name="telegram_bot_owner_id" type="text" value="{{ telegram_bot_owner_id }}">
+
+            <label for="telegram_bot_token" class="control-label">Telegram bot token</label>
+            <input class="form-control" id="telegram_bot_token" name="telegram_bot_token" type="text" value="{{ telegram_bot_token }}">
+
+            <button class="form-submit" type="submit">Save</button>
+        </li>
+    </ul>
+</form>

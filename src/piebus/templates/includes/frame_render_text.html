@@ -1,0 +1,10 @@
+<div class="frame frame-text">
+    <p class="frame-text-name">{{frame.name}}</p>
+    {% if frame.tags %}
+    <div>tags: {{frame.tags}}</div>
+    {% endif %}
+    <div class="frame-timestamp">
+        <a href="{{url_for('frame_detail', uuid=frame.uuid)}}">
+            {{ frame.timestamp|humanize }}</a>
+    </div>
+</div>

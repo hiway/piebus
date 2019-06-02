@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+    <title>{{ app_name }} - {% block title %}{% endblock %}</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <!--<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/milligram.css') }}"/>-->
+    <!--<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/hilite.css') }}"/>-->
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/default.css') }}"/>
+    {% block extra_head %}{% endblock %}
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/intercooler.min.js') }}"></script>
+    {% block extra_scripts %}{% endblock %}
+</head>
+<body>
+<div id="wrapper">
+    <nav id="navigation">
+        <ul class="nav-ul">
+            <li class="navli"><a href="{{ url_for('index') }}">🏡<span class="link-txt">Home</span></a></li>
+            <li class="navli"><a href="{{ url_for('live') }}">📡<span class="link-txt">Live</span></a></li>
+            {% if session.logged_in %}
+            <li class="navli"><a href="{{ url_for('list_frames') }}">✉<span class="link-txt">Frames</span></a></li>
+            <li class="navli"><a href="{{ url_for('admin') }}">⚙<span class="link-txt">Admin</span></a></li>
+            <li class="navli"><a href="{{ url_for('logout') }}">🔒<span class="link-txt">Log out</span></a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <div id="content">
+        {% for category, message in get_flashed_messages(with_categories=true) %}
+        <div class="alert alert-{{ category }}">
+            <p>{{ message }}</p>
+        </div>
+        {% endfor %}
+        <div class="post-body">{% block content %}{% endblock %}</div>
+        <div id="footer" class="post-body"><span>&copy; {{ copyright }} </span></div>
+    </div>
+</div>
+</body>
+</html>

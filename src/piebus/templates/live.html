@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content_title %}{{ title }}{% endblock %}
+
+{% block content %}
+{% if session.logged_in %}
+<h2>Post a text message:</h2>
+<form action="{{ url_for('frame_create') }}" id="frame-create" method="post" ic-enhance="true" ic-target="#recent" ic-swap-style="prepend">
+    <input id="pubish" name="publish" type="hidden" value="on">
+    <input id="render" name="render" type="hidden"  value="text">
+    <input id="kind" name="kind" type="hidden" value="{{Kind.message}}">
+
+    <label class="control-label" for="name">text</label>
+    <input class="form-control" id="name" name="name" type="text" placeholder="" value="">
+    <label class="control-label" for="tags">tags</label>
+    <input class="form-control" id="tags" name="tags" type="text" placeholder="" value="">
+
+    <button type="submit">Post public text message</button>
+</form>
+{% endif %}
+<div id="recent">
+    {% for frame in frames %}
+    {% include "includes/frame_render.html" %}
+    {% endfor %}
+</div>
+{% endblock %}

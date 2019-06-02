@@ -1,0 +1,13 @@
+<form action="{{ url_for('admin_settings_register') }}"
+      id="settings-registration-form" method="post" ic-enhance="true" class="transition-save">
+    <h4>Allow anyone to register an account:</h4>
+    <ul>
+        <li class="formli">
+            <input class="form-control" id="enable_register" name="enable_register" type="checkbox"
+                   {% if enable_register %}checked{% else%}{% endif %}>
+            <label for="enable_register" class="control-label">Account registration {% if enable_register %}enabled{%
+                else%}disabled{% endif %}.</label>
+            <button class="form-submit" type="submit">Save</button>
+        </li>
+    </ul>
+</form>

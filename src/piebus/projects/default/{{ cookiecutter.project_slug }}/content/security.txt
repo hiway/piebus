@@ -1,0 +1,1 @@
+Contact: {{ cookiecutter.project_security_contact }}
