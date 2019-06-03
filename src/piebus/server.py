@@ -285,7 +285,7 @@ async def frame_detail(uuid):
 @app.route('/frames/', methods=['GET', 'POST'])
 @login_required
 async def list_frames():
-    frames = await api.list_frames()
+    frames = await api.list_frames(limit=100)
     if await intercooler_request(request):
         return await render('includes/frames.html', frames=frames, Kind=Kind)
     return await render('frames.html', frames=frames, Kind=Kind)
