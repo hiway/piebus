@@ -68,12 +68,31 @@ nav, .nav-ul, .nav-form {
 audio {
   width: 100%;
   max-width: ( 100%  );
-  border: 3rem solid #fff;
+  border: 0.5rem solid #fff;
+  background-color: #fff;
   filter: drop-shadow( 0.2rem 0.2rem 0.2rem #ccc );
 }
 
 video {
+  width: 100%;
   max-width: 100%;
+  height: auto;
+  border: 0.5rem solid #fff;
+  background-color: #fff;
+  filter: drop-shadow( 0.2rem 0.2rem 0.2rem #ccc );
+}
+
+.frame-text-name {
+  width: 100%;
+}
+
+.frame {
+  background-color: #fafafa;
+  margin: 0.5rem 0;
+}
+
+.frame-timestamp {
+  text-align: right;
 }
 
 .control-label {
@@ -120,9 +139,9 @@ video {
 }
 
 
-@media only screen and (min-width: 900px) {
+@media only screen and (min-width: 1200px) {
   .post-body {
-    max-width: calc( 800px );
+    max-width: calc( 1200px );
   }
 
 }
