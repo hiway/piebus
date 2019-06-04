@@ -108,7 +108,7 @@ def humanize_ts(timestamp=False):
     'just now', etc
     https://shubhamjain.co/til/how-to-render-human-readable-time-in-jinja/
     """
-    now = datetime.now()
+    now = datetime.utcnow()
     if isinstance(timestamp, int):
         timestamp = datetime.fromtimestamp(timestamp)
     diff = now - timestamp

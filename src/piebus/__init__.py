@@ -6,6 +6,8 @@ from sys import intern
 
 import configparser
 
+YEAR = intern(str(datetime.datetime.now().year))
+
 conf = configparser.ConfigParser()
 conf._interpolation = configparser.ExtendedInterpolation()
 

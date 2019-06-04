@@ -36,7 +36,7 @@ db = SqliteExtDatabase(PATH_DATABASE, pragmas=pragmas)
 
 
 class BaseModel(Model):
-    timestamp = DateTimeField(default=datetime.datetime.now, index=True)
+    timestamp = DateTimeField(default=datetime.datetime.utcnow, index=True)
 
     class Meta:
         database = db
