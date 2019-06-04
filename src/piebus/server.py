@@ -248,7 +248,7 @@ async def index():
 
 @app.route('/live/')
 async def live():
-    frames = await api.list_public_frames()
+    frames = await api.list_public_frames(limit=conf['webapp']['live_posts_max'])
     if await intercooler_request(request):
         return await render('includes/live.html', frames=frames, Kind=Kind)
     return await render('live.html', frames=frames, Kind=Kind)

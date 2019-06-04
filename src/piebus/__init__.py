@@ -13,7 +13,7 @@ conf._interpolation = configparser.ExtendedInterpolation()
 
 conf['owner'] = {}
 conf['owner']['name'] = 'edit: piebus.conf'
-conf['owner']['copyright'] = '&copy; 2019 ${owner:name}'
+conf['owner']['copyright'] = '%s ${owner:name}' % YEAR
 
 conf['paths'] = {}
 conf['paths']['database'] = 'piebus.db'
@@ -27,7 +27,9 @@ conf['webapp'] = {}
 conf['webapp']['name'] = 'piebus'
 conf['webapp']['register'] = 'no'
 conf['webapp']['secret_key'] = uuid4().hex
-
+conf['webapp']['live_posts_max'] = '20'
+# conf['webapp']['live_posts_max_age'] = '1 week'
+# conf['webapp']['live_posts_per_page'] = 10
 conf['telegram-bot'] = {}
 conf['telegram-bot']['name'] = ''
 conf['telegram-bot']['token'] = ''
@@ -54,5 +56,3 @@ PATH_TEMPLATES = intern(conf['paths']['templates'])
 PATH_COOKIECUTTER_TEMPLATES = intern(conf['paths']['projects'])
 PATH_DATABASE = intern(conf['paths']['database'])
 PATH_CURRENT = intern(os.getcwd() + '/')
-
-YEAR = intern(str(datetime.datetime.now().year))
