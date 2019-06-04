@@ -7,7 +7,7 @@
     {% if url.endswith('.jpg') or url.endswith('.png') or url.endswith('.webp') %}
     <picture>
         <source media="(min-width: 1200px)"
-                srcset="{{url}}">
+                srcset="/{{url}}">
         <source media="(min-width: 900px)"
                 srcset="/resize/900/{{url}}">
         <img src="/resize/600/{{url}}" width="100%"/>
