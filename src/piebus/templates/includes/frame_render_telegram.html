@@ -3,21 +3,27 @@
     {% if data.text %}
     <p class="frame-text-name">{{data.text}}</p>
     {% elif data.media_url %}
-        {% with url = data.media_url %}
-            {% if url.endswith('.jpg') or url.endswith('.png') or url.endswith('.webp') %}
-            <img src="/{{url}}" width="100%" />
-            {% elif url.endswith('.oga') %}
-            <audio controls preload="metadata">
-            <source src="/{{url}}" type="audio/ogg" />
-            </audio>
-            {% elif url.endswith('.mp4') %}
-            <video height="400" max-width="100%" controls="controls">
-            <source src="/{{url}}" type="video/mp4">
-            </video>
-            {% else %}
-            {{data}}
-            {% endif %}
-        {% endwith %}
+    {% with url = data.media_url %}
+    {% if url.endswith('.jpg') or url.endswith('.png') or url.endswith('.webp') %}
+    <picture>
+        <source media="(min-width: 1200px)"
+                srcset="{{url}}">
+        <source media="(min-width: 900px)"
+                srcset="/resize/900/{{url}}">
+        <img src="/resize/600/{{url}}" width="100%"/>
+    </picture>
+    {% elif url.endswith('.oga') %}
+    <audio controls preload="metadata">
+        <source src="/{{url}}" type="audio/ogg"/>
+    </audio>
+    {% elif url.endswith('.mp4') %}
+    <video height="400" max-width="100%" controls="controls">
+        <source src="/{{url}}" type="video/mp4">
+    </video>
+    {% else %}
+    {{data}}
+    {% endif %}
+    {% endwith %}
     {% else %}
     {{data}}
     {% endif %}
