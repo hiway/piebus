@@ -7,7 +7,7 @@
             {% if url.endswith('.jpg') or url.endswith('.png') or url.endswith('.webp') %}
             <img src="/{{data.media_url}}" width="100%" />
             {% elif url.endswith('.oga') %}
-            <audio controls preload="none">
+            <audio controls preload="metadata">
             <source src="/{{url}}" type="audio/ogg" />
             </audio>
             {% elif url.endswith('.mp4') %}

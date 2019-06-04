@@ -1,8 +1,9 @@
 
-body,* {
+body {
     margin: 0;
     padding: 0;
 }
+
 
 #wrapper {
   display: grid;
@@ -57,16 +58,18 @@ nav, .nav-ul, .nav-form {
 }
 
 #footer {
-  padding: 0.5em;
-  padding-top: 1.6em;
-  padding-bottom: 5em;
+  padding: 0.5rem;
+  padding-top: 1.6rem;
+  padding-bottom: 5rem;
   background-color: #eaeaea;
   display: none;
 }
 
 audio {
-  width: 25em;
-  max-width: 100%;
+  width: 100%;
+  max-width: ( 100%  );
+  border: 3rem solid #fff;
+  filter: drop-shadow( 0.2rem 0.2rem 0.2rem #ccc );
 }
 
 video {
@@ -112,6 +115,14 @@ video {
 
   #footer {
     display: block;
+  }
+
+}
+
+
+@media only screen and (min-width: 900px) {
+  .post-body {
+    max-width: calc( 800px );
   }
 
 }
