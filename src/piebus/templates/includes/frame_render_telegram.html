@@ -6,11 +6,11 @@
     {% with url = data.media_url %}
     {% if url.endswith('.jpg') or url.endswith('.png') or url.endswith('.webp') %}
     <picture>
-        <source media="(min-width: 1200px)"
-                srcset="/{{url}}">
         <source media="(min-width: 900px)"
-                srcset="/resize/900/{{url}}">
+                srcset="/{{url}}">
         <source media="(min-width: 600px)"
+                srcset="/resize/900/{{url}}">
+        <source media="(min-width: 300px)"
                 srcset="/resize/600/{{url}}">
         <img src="/resize/300/{{url}}" width="100%"/>
     </picture>
