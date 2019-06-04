@@ -3,6 +3,9 @@ import os
 import click
 
 from uuid import uuid4
+
+from piebus import conf
+
 from . import PATH_BASE, PATH_CURRENT, YEAR
 
 
@@ -42,26 +45,26 @@ def init(path, template, security_contact):
 def serve(path, debug, reload, register, telegram, host, port, static_dir, static_url, content_dir):
     global PATH_CURRENT, APP_NAME
     PATH_CURRENT = os.path.expanduser(path)
-    from .lib.dotenv import Dotenv
-    from .server import app, api
-    env = Dotenv(os.path.join(PATH_CURRENT, '.env'))
+    from .server import app
     os.chdir(os.path.expanduser(path))
     app.static_folder = static_dir
     app.static_url_path = static_url
-    app.config['CONTENT_FOLDER'] = content_dir or env.get('CONTENT_DIR', 'content/')
-    app.config['SECRET_KEY'] = env['SECRET_KEY']
-    app.config['APP_NAME'] = env['APP_NAME']
-    app.config['ENABLE_REGISTER'] = register
-    app.config['COPYRIGHT'] = f'{YEAR} {env["COPYRIGHT"]}'
+    app.config['CONTENT_FOLDER'] = content_dir or conf['paths']['content']
+    app.config['SECRET_KEY'] = conf['webapp']['secret_key']
+    app.config['APP_NAME'] = conf['webapp']['name']
+    app.config['ENABLE_REGISTER'] = conf['webapp']['register']
+    app.config['COPYRIGHT'] = conf['owner']['copyright']
     tg = None
     if telegram:
         from .agents.telegram import start
-        print('Starting telegram polling')
+        print('Starting telegram polling...')
         tg = start()
     loop = asyncio.get_event_loop()
+    print('Starting web application...')
     app.run(host=host, port=port, debug=debug, use_reloader=reload, loop=loop)
+    print('Exiting...')
     if tg:
-        print('Stopping telegram polling')
+        print('Stopping telegram polling...')
         loop.run_until_complete(tg())
 
 

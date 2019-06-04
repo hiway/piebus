@@ -7,16 +7,17 @@ from aiogram import Bot, Dispatcher, executor, types, filters
 from aiogram.types import ReplyKeyboardRemove
 from aiogram.types.message import ContentType
 from aiogram.utils.executor import Executor, log, _setup_callbacks
+from piebus import conf
 
 from piebus.api import Kind
 
-from piebus.server import api, content_path
+from piebus.server import api, content_path, render
 from quart import url_for
 
-BOT_TOKEN = os.environ['TELEGRAM_BOT_TOKEN']
-BOT_OWNER = os.environ['TELEGRAM_BOT_OWNER']
-BOT_OWNER_ID = int(os.environ['TELEGRAM_BOT_OWNER_ID'])
-BOT_NAME = os.environ['TELEGRAM_BOT_NAME']
+BOT_NAME = conf['telegram-bot']['name']
+BOT_TOKEN = conf['telegram-bot']['token']
+BOT_OWNER = conf['telegram-bot']['owner']
+BOT_OWNER_ID = int(conf['telegram-bot']['owner_id'] or 0)
 
 # Initialize bot and dispatcher
 bot = Bot(token=BOT_TOKEN)
@@ -67,11 +68,12 @@ async def callback_query(message: types.Message):
     if message.data.startswith('frame public '):
         await api.publish(message.data.replace('frame public ', ''), True)
         await message.answer(f'marked as pulic')
-        await bot.send_message(message.message.chat.id, f'marked as public')
+        await bot.send_message(message.message.chat.id, f'Marked as public.')
     elif message.data.startswith('frame private '):
         await api.publish(message.data.replace('frame private ', ''), False)
         await message.answer(f'marked as private')
-        await bot.send_message(message.message.chat.id, f'marked as private')
+        await bot.send_message(message.message.chat.id, f'Marked as private.')
+    await bot.send_message(message.message.chat.id, f'Published.')
 
 
 @dp.inline_handler()

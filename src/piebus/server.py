@@ -6,6 +6,8 @@ from datetime import datetime
 
 import aiofiles
 from functools import lru_cache
+
+from piebus import conf
 from quart import (
     abort,
     flash,
@@ -68,8 +70,8 @@ def login_required(fn):
 
 async def render(template, **context):
     extra_context = dict(
-        copyright=app.config['COPYRIGHT'],
-        app_name=app.config['APP_NAME'],
+        copyright=conf['owner']['copyright'],
+        app_name=conf['webapp']['name'],
     )
     extra_context.update(context)
     return await render_template(template, **extra_context)
