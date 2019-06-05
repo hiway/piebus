@@ -6,36 +6,71 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/milligram.css') }}"/>
-    <!--<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/hilite.css') }}"/>-->
+    <style>
+    * {
+      font-family: 'NotoSansDisplay-Regular','NotoSansDisplay-Fallback', 'NotoSansDisplay', Arial, sans-serif;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    .wrapper {
+      display: grid;
+      height: 100vh;
+      width: 100vw;
+      grid-gap: 0;
+      grid-template-columns: auto;
+      grid-template-rows: auto 4em;
+      grid-template-areas:
+        "content"
+        "nav";
+    }
+
+    .nav {
+      grid-area: nav;
+    }
+
+    .content {
+      grid-area: content;
+      overflow: scroll;
+    }
+
+    .footer {
+      display: none;
+    }
+    </style>
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/default.css') }}"/>
-    {% block extra_head %}{% endblock %}
+    {% block extra_head %}
+    {% endblock %}
+    {% if session.logged_in %}
     <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/intercooler.min.js') }}"></script>
+    {% endif %}
     {% block extra_scripts %}{% endblock %}
 </head>
 <body>
-<div id="wrapper">
-    <nav id="navigation">
-        <ul class="nav-ul">
-            <li class="nav-li"><a href="{{ url_for('index') }}">🏡<span class="link-txt">Home</span></a></li>
-            <li class="nav-li"><a href="{{ url_for('live') }}">📡<span class="link-txt">Live</span></a></li>
-            {% if session.logged_in %}
-            <li class="nav-li"><a href="{{ url_for('list_frames') }}">✉<span class="link-txt">Frames</span></a></li>
-            <li class="nav-li"><a href="{{ url_for('admin') }}">⚙<span class="link-txt">Admin</span></a></li>
-            <li class="nav-li"><a href="{{ url_for('logout') }}">🔒<span class="link-txt">Log out</span></a></li>
-            {% endif %}
-        </ul>
-    </nav>
-
-    <div id="content">
+<div class="wrapper">
+    <div class="content">
         {% for category, message in get_flashed_messages(with_categories=true) %}
         <div class="alert alert-{{ category }}">
             <p>{{ message }}</p>
         </div>
         {% endfor %}
         <div class="post-body">{% block content %}{% endblock %}</div>
-        <div id="footer" class="post-body"><span>&copy; {{ copyright }} </span></div>
+        <div class="footer post-body"><span>&copy; {{ copyright }} </span></div>
+    </div>
+    <div class="nav">
+        <ul class="nav-ul">
+            <li class="nav-li"><a href="{{ url_for('index') }}"><span class="link-txt">Home</span></a></li>
+            <li class="nav-li"><a href="{{ url_for('live') }}"><span class="link-txt">Live</span></a></li>
+            {% if session.logged_in %}
+            <li class="nav-li"><a href="{{ url_for('list_frames') }}"><span class="link-txt">Frames</span></a></li>
+            <li class="nav-li"><a href="{{ url_for('admin') }}"><span class="link-txt">Admin</span></a></li>
+            <li class="nav-li"><a href="{{ url_for('logout') }}"><span class="link-txt">Log out</span></a></li>
+            {% endif %}
+        </ul>
     </div>
 </div>
 </body>
