@@ -39,20 +39,17 @@ def init(path, template, security_contact):
 @click.option('--telegram/--no-telegram', default=False)
 @click.option('--host', default='127.0.0.1')
 @click.option('--port', default='5000')
-@click.option('--static-dir', default=f'{PATH_BASE}/static/', help=f'{PATH_BASE}/static/')
-@click.option('--static-url', default='static/', help='static/')
-@click.option('--content-dir', default='content/', help='content/')
-def serve(path, debug, reload, register, telegram, host, port, static_dir, static_url, content_dir):
+def serve(path, debug, reload, register, telegram, host, port):
     global PATH_CURRENT, APP_NAME
     PATH_CURRENT = os.path.expanduser(path)
     from .server import app
     os.chdir(os.path.expanduser(path))
-    app.static_folder = static_dir
-    app.static_url_path = static_url
-    app.config['CONTENT_FOLDER'] = content_dir or conf['paths']['content']
+    app.static_folder = conf['paths']['static']
+    app.static_url_path = '/static'
+    app.config['CONTENT_FOLDER'] = conf['paths']['content']
     app.config['SECRET_KEY'] = conf['webapp']['secret_key']
     app.config['APP_NAME'] = conf['webapp']['name']
-    app.config['ENABLE_REGISTER'] = conf['webapp']['register']
+    app.config['ENABLE_REGISTER'] = register or conf['webapp']['register']
     app.config['COPYRIGHT'] = conf['owner']['copyright']
     tg = None
     if telegram:
