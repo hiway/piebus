@@ -1,9 +1,7 @@
-
 body {
     margin: 0;
     padding: 0;
 }
-
 
 #wrapper {
   display: grid;
@@ -30,14 +28,14 @@ nav, .nav-ul, .nav-form {
   padding: 0;
 }
 
-.navli {
+.nav-li {
   display: inline-block;
   padding-left: 0.3em;
   padding-right: 1em;
   text-shadow: 0 0 0.2em #aaa;
 }
 
-.navli a {
+.nav-li a {
   color: #fff;
   text-decoration: none;
   font-size: 1.6em;
@@ -123,7 +121,7 @@ video {
       "content"
   }
 
-  .navli a {
+  .nav-li a {
     font-size: 1.2em;
   }
 
@@ -143,7 +141,6 @@ video {
   .post-body {
     max-width: calc( 1200px );
   }
-
 }
 
 /* transitions */

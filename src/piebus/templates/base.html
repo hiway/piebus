@@ -18,12 +18,12 @@
 <div id="wrapper">
     <nav id="navigation">
         <ul class="nav-ul">
-            <li class="navli"><a href="{{ url_for('index') }}">🏡<span class="link-txt">Home</span></a></li>
-            <li class="navli"><a href="{{ url_for('live') }}">📡<span class="link-txt">Live</span></a></li>
+            <li class="nav-li"><a href="{{ url_for('index') }}">🏡<span class="link-txt">Home</span></a></li>
+            <li class="nav-li"><a href="{{ url_for('live') }}">📡<span class="link-txt">Live</span></a></li>
             {% if session.logged_in %}
-            <li class="navli"><a href="{{ url_for('list_frames') }}">✉<span class="link-txt">Frames</span></a></li>
-            <li class="navli"><a href="{{ url_for('admin') }}">⚙<span class="link-txt">Admin</span></a></li>
-            <li class="navli"><a href="{{ url_for('logout') }}">🔒<span class="link-txt">Log out</span></a></li>
+            <li class="nav-li"><a href="{{ url_for('list_frames') }}">✉<span class="link-txt">Frames</span></a></li>
+            <li class="nav-li"><a href="{{ url_for('admin') }}">⚙<span class="link-txt">Admin</span></a></li>
+            <li class="nav-li"><a href="{{ url_for('logout') }}">🔒<span class="link-txt">Log out</span></a></li>
             {% endif %}
         </ul>
     </nav>
