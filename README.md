@@ -23,5 +23,5 @@ piebus init demosite
 
 ```bash
 cd demosite
-piebus serve --debug
+piebus serve --debug --register
 ```
