@@ -6,8 +6,6 @@ from uuid import uuid4
 
 from piebus import conf
 
-from . import PATH_BASE, PATH_CURRENT, YEAR
-
 
 @click.group()
 def main():
