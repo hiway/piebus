@@ -123,4 +123,7 @@ video, img, p.frame-text {
       "nav"
       "content";
   }
+  .footer {
+    display: block;
+  }
 }
