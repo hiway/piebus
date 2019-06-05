@@ -347,6 +347,7 @@ async def admin_settings_register():
 
 
 @app.route('/admin/settings/telegram', methods=['POST'])
+@login_required
 async def admin_settings_telegram():
     form = await request.form
     tg_settings = dict(
@@ -363,6 +364,7 @@ async def admin_settings_telegram():
 
 
 @app.route('/admin/settings/<setting>', methods=['POST'])
+@login_required
 async def admin_settings_setting(setting):
     value = (await query_or_form_field(request, setting, ''))
     await api.preference(setting, value)
