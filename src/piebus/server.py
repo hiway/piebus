@@ -243,13 +243,19 @@ def content_file(filename):
 @app.route('/resize/<int:width>/content/<path:filename>')
 def resize_image(width, filename):
     filename = secure_filename(filename)
-    filename ='content/' + filename
+    filename = 'content/' + filename
     if filename and allowed_file(filename):
         size = (width, width)
         image = Image.open(filename)
         image.thumbnail(size, Image.ANTIALIAS)
         mem_file = io.BytesIO()
-        image.save(mem_file, image.format)
+        if width <= 500:
+            quality = 50
+        elif width <= 900:
+            quality = 70
+        else:
+            quality = 85
+        image.save(mem_file, image.format, quality=quality)
         mem_file.seek(0)
         return Response(mem_file.read(), content_type=f'image/{image.format}')
     abort(404)
