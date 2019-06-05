@@ -2,7 +2,11 @@
 
 piebus - self-hosted personal web-presence + chat assistant + automation platform.
 
-# Install
+## Status:
+
+Under development, things will break, often.
+
+## Install
 
 ```bash
 git clone https://github.com/hiway/piebus.git
@@ -12,14 +16,14 @@ pip install -e .
 ```
 
 
-# Create "demosite"
+## Create "demosite"
 
 ```bash
 piebus init demosite
 ```
 
 
-# Serve "demosite"
+## Serve "demosite"
 
 ```bash
 cd demosite
