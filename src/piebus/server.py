@@ -1,5 +1,7 @@
 import asyncio
+import base64
 import functools
+import io
 import json
 import os
 from datetime import datetime
@@ -7,6 +9,7 @@ from datetime import datetime
 import aiofiles
 from functools import lru_cache
 
+from PIL import Image
 from piebus import conf
 from quart import (
     abort,
@@ -15,6 +18,7 @@ from quart import (
     redirect,
     request,
     render_template,
+    Response,
     send_from_directory,
     session,
     url_for,
@@ -207,11 +211,10 @@ async def logout():
 
 
 @app.route('/favicon.ico')
-@lru_cache(maxsize=8)
 def favicon():
     if os.path.exists(os.path.join(app.config['CONTENT_FOLDER'], 'favicon.ico')):
         return send_from_directory(app.config['CONTENT_FOLDER'], 'favicon.ico')
-    raise abort(404)
+    abort(404)
 
 
 @app.route('/.well-known/security.txt')
@@ -235,6 +238,21 @@ def content_file(filename):
         return send_from_directory(
             app.config['CONTENT_FOLDER'], filename)
     raise abort(404)
+
+
+@app.route('/resize/<int:width>/content/<path:filename>')
+def resize_image(width, filename):
+    filename = secure_filename(filename)
+    filename ='content/' + filename
+    if filename and allowed_file(filename):
+        size = (width, width)
+        image = Image.open(filename)
+        image.thumbnail(size, Image.ANTIALIAS)
+        mem_file = io.BytesIO()
+        image.save(mem_file, image.format)
+        mem_file.seek(0)
+        return Response(mem_file.read(), content_type=f'image/{image.format}')
+    abort(404)
 
 
 @app.route('/')
