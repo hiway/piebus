@@ -19,9 +19,9 @@
         <img src="/resize/240/{{url}}" width="100%"/>
     </picture>
     {% elif url.endswith('.oga') %}
-    <audio controls preload="metadata" >
-        <source src="/{{url}}" type="audio/ogg"/>
-    </audio>
+    <video controls="controls" class="audio">
+        <source src="/{{url}}" type="audio/ogg">
+    </video>
     {% elif url.endswith('.mp4') %}
     <video controls="controls">
         <source src="/{{url}}" type="video/mp4">

@@ -72,13 +72,19 @@ body {
   padding: 1rem 0;
 }
 
-audio, video, img, p.frame-text {
+video, img, p.frame-text {
   width: 100%;
-  max-width: ( 100%  );
+  max-width: 100%;
   height: auto;
+  min-height: 2rem;
   border: 0.5rem solid #fff;
   background-color: #fff;
   filter: drop-shadow( 0.2rem 0.2rem 0.2rem #ccc );
+}
+
+.audio {
+  height: 50px;
+  min-height: 50px;
 }
 
 .frame-text {
