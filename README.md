@@ -1,7 +1,6 @@
 # piebus
 
-piebus - Self-hosted personal website with Markdown wiki and Python functions backed by SQLite3.
-
+piebus - self-hosted personal web-presence + chat assistant + automation platform.
 
 # Install
 
