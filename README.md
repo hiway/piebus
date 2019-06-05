@@ -5,17 +5,17 @@ piebus - self-hosted personal web-presence + chat assistant + automation platfor
 # Install
 
 ```bash
-pip install piebus
+git clone https://github.com/hiway/piebus.git
+cd piebus
+# Optionally create/activate virtualenv here.
+pip install -e .
 ```
 
 
 # Create "demosite"
 
 ```bash
-mkdir demosite
-cd demosite
-
-piebus init .
+piebus init demosite
 ```
 
 
