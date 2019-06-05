@@ -369,8 +369,3 @@ async def admin_settings_setting(setting):
     if await intercooler_request(request):
         return await render(f'admin/settings/{setting}.html', **{setting: value})
     return redirect(url_for('admin_settings'))
-
-# @app.route('/')
-# async def index():
-#     return await render('vue.html',
-#                         title='admin')
