@@ -80,12 +80,13 @@ video, img, p.frame-text {
   max-width: 100%;
   height: auto;
   min-height: 2rem;
+  object-fit: contain;
   border: 0.5rem solid #fff;
   background-color: #fff;
   filter: drop-shadow( 0.2rem 0.2rem 0.2rem #ccc );
 }
 
-.audio {
+video.audio {
   height: 50px;
   min-height: 50px;
 }
