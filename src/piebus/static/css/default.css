@@ -102,6 +102,7 @@ video.audio {
 
 .frame-text {
   padding: 1rem 2rem;
+  max-height: auto;
 }
 
 .frame-caption {
