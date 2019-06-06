@@ -89,7 +89,7 @@ video, img, .frame-text {
   height: auto;
   min-height: 2rem;
   object-fit: contain;
-  border: 1rem solid #fff;
+  border: 0.5rem solid #fff;
   background-color: #fff;
   filter: drop-shadow( 0.2rem 0.2rem 0.2rem var( --clr-brown) );
 }
@@ -104,8 +104,16 @@ video.audio {
 }
 
 .frame-text {
-  padding: 1rem 2rem;
+  padding: 0.2rem 0.4rem;
+}
 
+.codehilite {
+  overflow-x: scroll;
+  scrollbar-width: none;
+}
+
+.codehilite::-webkit-scrollbar {
+    display: none;
 }
 
 .frame-caption {
@@ -142,6 +150,17 @@ video.audio {
       "nav"
       "content";
   }
+
+  video, img, .frame-text {
+    border: 1rem solid #fff;
+  }
+
+
+  .frame-text {
+    padding: 1rem 2rem;
+  }
+
+
   .footer {
     color: var( --clr-blue );
     text-align: center;
