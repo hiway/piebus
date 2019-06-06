@@ -87,7 +87,6 @@ video, img, p.frame-text {
   width: 100%;
   max-width: 100%;
   height: auto;
-  max-height: calc( 100vh - 5rem );
   min-height: 2rem;
   object-fit: contain;
   border: 1rem solid #fff;
@@ -95,14 +94,17 @@ video, img, p.frame-text {
   filter: drop-shadow( 0.2rem 0.2rem 0.2rem var( --clr-brown) );
 }
 
+video, img {
+  max-height: calc( 100vh - 5rem );
+}
+
 video.audio {
   height: 50px;
   min-height: 50px;
 }
 
-.frame-text {
+p.frame-text {
   padding: 1rem 2rem;
-  max-height: auto;
 }
 
 .frame-caption {
