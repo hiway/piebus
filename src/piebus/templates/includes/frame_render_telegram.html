@@ -16,7 +16,7 @@
                 srcset="/resize/400/{{url}}">
         <source media="(min-width: 300px)"
                 srcset="/resize/300/{{url}}">
-        <img src="/resize/240/{{url}}" width="100%"/>
+        <img src="/resize/240/{{url}}" width="100%" alt="" class="frame-image" />
     </picture>
     {% elif url.endswith('.oga') %}
     <video playsinline controls="controls" preload="metadata" class="audio">

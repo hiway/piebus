@@ -1,5 +1,13 @@
 :root {
   font-size: 16px;
+  --clr-red: #D64434;
+  --clr-darkblue: #28405D;
+  --clr-white: #FCF8F3;
+  --clr-gray: #7A8089;
+  --clr-bluegray: #9AB3BF;
+  --clr-darkgray: #2C2B36;
+  --clr-blue: #596AA0;
+  --clr-brown: #c1b3ac;
 }
 
 html {
@@ -17,7 +25,7 @@ html {
 body {
     margin: 0;
     padding: 0;
-    background-color: #FCF8F3;
+    background-color: var( --clr-white );
 }
 
 .wrapper {
@@ -34,7 +42,7 @@ body {
 
 .nav {
   grid-area: nav;
-  background-color: #28405D;
+  background-color: var( --clr-darkblue );
 }
 
 .content {
@@ -69,9 +77,9 @@ body {
 }
 
 .frame {
-  border-bottom: 1px dashed #9AB3BF;
+  border-bottom: 1px dashed var( --clr-bluegray );
   padding: 1rem 0;
-  max-width: 64rem;
+  max-width: 56rem;
   margin: 0 auto;
 }
 
@@ -79,11 +87,12 @@ video, img, p.frame-text {
   width: 100%;
   max-width: 100%;
   height: auto;
+  max-height: calc( 100vh - 5rem );
   min-height: 2rem;
   object-fit: contain;
-  border: 0.5rem solid #fff;
+  border: 1rem solid #fff;
   background-color: #fff;
-  filter: drop-shadow( 0.2rem 0.2rem 0.2rem #ccc );
+  filter: drop-shadow( 0.2rem 0.2rem 0.2rem var( --clr-brown) );
 }
 
 video.audio {
@@ -92,7 +101,7 @@ video.audio {
 }
 
 .frame-text {
-  padding: 1rem;
+  padding: 1rem 2rem;
 }
 
 .frame-caption {
@@ -130,7 +139,7 @@ video.audio {
       "content";
   }
   .footer {
-    color: #596AA0;
+    color: var( --clr-blue );
     text-align: center;
     display: block;
     margin: 5rem 0 7rem 0;
