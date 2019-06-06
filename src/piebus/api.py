@@ -86,6 +86,7 @@ class Frame(BaseModel):
             pass
         return {}
 
+
 class Kind(object):
     command = 0
     event = 1

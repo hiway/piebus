@@ -27,14 +27,9 @@ tg_tilde = re.compile(r'^~(.*)', flags=re.MULTILINE | re.UNICODE)
 
 
 def telegram_markdown(text):
-    print('tgmd - input:', text)
     text = html.unescape(text)
-    print('tgmd - unescape:', text)
-    text =  re.sub(r'(http:[^\s\n\r]+)', r'<a href="\1">\1</a>',
+    text =  re.sub(r'(https?:[^\s\n\r]+)', r'<a href="\1">\1</a>',
 text)
-    print('tgmd - urlize:', text)
     md = tg_tilde.sub(r'```\1', text)
-    print('tgmd - inter - tilde sub:', md)
     ht = render_markdown(md)
-    print('tgmd - output:', ht)
     return ht
