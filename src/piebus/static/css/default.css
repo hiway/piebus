@@ -95,6 +95,11 @@ video.audio {
   padding: 1rem;
 }
 
+.frame-caption {
+  padding: 0 1rem;
+  color: #777;
+}
+
 .frame-timestamp {
   text-align: right;
   padding: 0.5rem 1rem;

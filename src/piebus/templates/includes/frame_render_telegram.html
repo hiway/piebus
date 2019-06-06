@@ -33,6 +33,11 @@
     {% else %}
     {{data}}
     {% endif %}
+
+    {% if data.caption %}
+    <p class="frame-caption">{{data.caption}}</p>
+    {% endif %}
+
     {% if frame.tags %}
     <div>tags: {{frame.tags}}</div>
     {% endif %}
