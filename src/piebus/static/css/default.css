@@ -107,7 +107,9 @@ video.audio {
   padding: 0.2rem 0.4rem;
 }
 
-.codehilite {
+.codehilite * {
+  font-family: 'NotoMono-Regular', monospace;
+  font-size: 0.8rem;
   overflow-x: scroll;
   scrollbar-width: none;
 }
@@ -137,6 +139,13 @@ video.audio {
     font-family: 'NotoSansDisplay-Regular';
     src: url( /static/font/notosansdisplay-regular-webfont.woff2 ) format('woff2'),
          url( /static/font/notosansdisplay-regular-webfont.woff ) format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'NotoMono-Regular';
+    src: url( /static/font/notomono-regular-webfont.woff2 ) format('woff2'),
+         url( /static/font/notomono-regular-webfont.woff ) format('woff');
     font-weight: normal;
     font-style: normal;
   }
