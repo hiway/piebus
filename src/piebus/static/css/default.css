@@ -83,7 +83,7 @@ body {
   margin: 0 auto;
 }
 
-video, img, p.frame-text {
+video, img, .frame-text {
   width: 100%;
   max-width: 100%;
   height: auto;
@@ -103,8 +103,9 @@ video.audio {
   min-height: 50px;
 }
 
-p.frame-text {
+.frame-text {
   padding: 1rem 2rem;
+
 }
 
 .frame-caption {

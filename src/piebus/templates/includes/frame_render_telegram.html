@@ -1,11 +1,11 @@
 <div class="frame frame-default">
-    {% with data = frame.jdata %}
-    {% if data.text %}
-    <p class="frame-text">{{data.text}}</p>
-    {% elif data.media_url %}
-    {% with url = data.media_url %}
-    {% if url.endswith('.jpg') or url.endswith('.png') or url.endswith('.webp') %}
-    <picture>
+  @ with data = frame.jdata
+  @ if data.text
+    <div class="frame-text">{{data.text|telegram_markdown|safe}}</div>
+  @ elif data.media_url
+    @ with url = data.media_url
+    @ if url.endswith('.jpg') or url.endswith('.png') or url.endswith('.webp')
+      <picture>
         <source media="(min-width: 900px)"
                 srcset="/{{url}}">
         <source media="(min-width: 700px)"
@@ -16,34 +16,34 @@
                 srcset="/resize/400/{{url}}">
         <source media="(min-width: 300px)"
                 srcset="/resize/300/{{url}}">
-        <img src="/resize/240/{{url}}" width="100%" alt="" class="frame-image" />
-    </picture>
-    {% elif url.endswith('.oga') %}
-    <video playsinline controls="controls" preload="metadata" class="audio">
+        <img src="/resize/240/{{url}}" width="100%" alt="" class="frame-image"/>
+      </picture>
+    @ elif url.endswith('.oga')
+      <video playsinline controls="controls" preload="metadata" class="audio">
         <source src="/{{url}}" type="audio/ogg">
-    </video>
-    {% elif url.endswith('.mp4') %}
-    <video playsinline controls="controls" preload="metadata">
+      </video>
+    @ elif url.endswith('.mp4')
+      <video playsinline controls="controls" preload="metadata">
         <source src="/{{url}}" type="video/mp4">
-    </video>
-    {% else %}
+      </video>
+    @ else
+     {{data}}
+    @ endif
+    @ endwith
+  @ else
     {{data}}
-    {% endif %}
-    {% endwith %}
-    {% else %}
-    {{data}}
-    {% endif %}
+  @ endif
 
-    {% if data.caption %}
+  @ if data.caption
     <p class="frame-caption">{{data.caption}}</p>
-    {% endif %}
+  @ endif
 
-    {% if frame.tags %}
+  @ if frame.tags
     <div>tags: {{frame.tags}}</div>
-    {% endif %}
-    <div class="frame-timestamp">
-        <a href="{{url_for('frame_detail', uuid=frame.uuid)}}">
-            {{ frame.timestamp|humanize }}</a>
-    </div>
-    {% endwith %}
+  @ endif
+  <div class="frame-timestamp">
+    <a href="{{url_for('frame_detail', uuid=frame.uuid)}}">
+      {{ frame.timestamp|humanize }}</a>
+  </div>
+  @ endwith
 </div>

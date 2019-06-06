@@ -11,6 +11,7 @@ from functools import lru_cache
 
 from PIL import Image
 from piebus import conf
+from piebus.utils import telegram_markdown
 from quart import (
     abort,
     flash,
@@ -147,7 +148,12 @@ def humanize_ts(timestamp=False):
 
 
 app.jinja_env.filters['humanize'] = humanize_ts
+app.jinja_env.filters['markdown'] = render_markdown
+app.jinja_env.filters['telegram_markdown'] = telegram_markdown
+app.jinja_env.line_statement_prefix = '@'
+app.jinja_env.line_comment_prefix = '#'
 
+print(app.jinja_options.items())
 
 @app.route('/register/', methods=['GET', 'POST'])
 @ensure_database
