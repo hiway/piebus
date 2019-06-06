@@ -5,7 +5,6 @@ import os
 import markdown
 
 from cookiecutter.main import cookiecutter
-from jinja2.utils import urlize
 
 from . import PATH_COOKIECUTTER_TEMPLATES
 
@@ -28,8 +27,7 @@ tg_tilde = re.compile(r'^~(.*)', flags=re.MULTILINE | re.UNICODE)
 
 def telegram_markdown(text):
     text = html.unescape(text)
-    text =  re.sub(r'(https?:[^\s\n\r]+)', r'<a href="\1">\1</a>',
-text)
+    text =  re.sub(r'(https?:[^\s\n\r]+)', r'<a href="\1">\1</a>', text)
     md = tg_tilde.sub(r'```\1', text)
     ht = render_markdown(md)
     return ht

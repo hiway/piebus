@@ -33,9 +33,10 @@ setup(
         'markdown==3.1.1',
         'newspaper3k==0.2.8',
         'osmviz==3.1.0',
-        'quart==0.9.1',
         'peewee==3.9.5',
         'pysyncobj==0.3.4',
+        'quart==0.9.1',
+        'rivescript==1.14.9',
         'werkzeug==0.15.4',
     ],
 

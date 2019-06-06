@@ -1,4 +1,5 @@
 import asyncio
+import functools
 import os
 
 from uuid import uuid4
@@ -10,6 +11,7 @@ from aiogram.utils.executor import Executor, log, _setup_callbacks
 from piebus import conf
 
 from piebus.api import Kind
+from piebus.bot import PieBot
 
 from piebus.server import api, content_path, render
 from quart import url_for
@@ -22,13 +24,38 @@ BOT_OWNER_ID = int(conf['telegram-bot']['owner_id'] or 0)
 # Initialize bot and dispatcher
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher(bot)
+pie = PieBot(data_path=os.path.join(conf['paths']['package'], 'data'))
 
 
 def mkfilename(prefix, suffix):
     return content_path(f'{prefix}{uuid4().hex}.{suffix}')
 
 
+def require_owner(func):
+    functools.wraps(func)
+
+    def wrapper(msg_or_inline):
+        owner_id = int(conf['telegram-bot']['owner_id'])
+
+        async def nop():
+            return
+
+        if msg_or_inline.chat and \
+                msg_or_inline.from_user.id != owner_id:
+            print('!!! skipping chat', msg_or_inline)
+            return nop()
+        if msg_or_inline.from_user and \
+                msg_or_inline.from_user.id != owner_id:
+            print('!!! skipping inline query', msg_or_inline)
+            return nop()
+
+        return func(msg_or_inline)
+
+    return wrapper
+
+
 @dp.message_handler(filters.CommandStart())
+@require_owner
 async def send_welcome(message: types.Message):
     print('handling /start annd /help commands', message.text)
     await api.create_frame(Kind.event, 'telegram-chat-start', data=dict(message))
@@ -36,6 +63,7 @@ async def send_welcome(message: types.Message):
 
 
 @dp.message_handler(content_types=ContentType.ANY)
+@require_owner
 async def messages(message: types.Message):
     data = dict(message)
     path = None
@@ -49,18 +77,28 @@ async def messages(message: types.Message):
         path = await message.video.download(mkfilename('vid_', 'mp4'))
     elif message.sticker:
         path = await message.sticker.thumb.download(mkfilename('stk_', 'webp'))
+    elif message.text:
+        pass
     else:
         print('unknown media:', message)
     if path:
         data.update({'media_url': path.name})
+    text = message.text.lower() if message.text else ''
+    if text.startswith('post '):
+        data.update({'text': text[5:]})
     frame = await api.create_frame(Kind.event, 'telegram-message', data=data, render='telegram')
-    markup = types.InlineKeyboardMarkup()
-    markup.add(types.InlineKeyboardButton('Public', callback_data=f'frame public {frame.uuid}'))
-    markup.add(types.InlineKeyboardButton('Private', callback_data=f'frame private {frame.uuid}'))
-    await message.reply('Privacy for this post:', reply_markup=markup)
+    if path or text.startswith('post '):
+        markup = types.InlineKeyboardMarkup()
+        markup.add(types.InlineKeyboardButton('Public', callback_data=f'frame public {frame.uuid}'))
+        markup.add(types.InlineKeyboardButton('Private', callback_data=f'frame private {frame.uuid}'))
+        await message.reply('Privacy for this post:', reply_markup=markup)
+    else:
+        reply = pie.reply(text) or '...'
+        await message.reply(reply)
 
 
 @dp.callback_query_handler()
+@require_owner
 async def callback_query(message: types.Message):
     if not message.data.startswith('frame'):
         await message.answer('dunno')
@@ -77,6 +115,7 @@ async def callback_query(message: types.Message):
 
 
 @dp.inline_handler()
+@require_owner
 async def inline(inline_query: types.InlineQuery):
     input_content = types.InputTextMessageContent(inline_query.query or 'echo')
     item1 = types.InlineQueryResultArticle(id='1', title='echo %s' % input_content['message_text'],
