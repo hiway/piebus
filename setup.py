@@ -37,6 +37,7 @@ setup(
         'pysyncobj==0.3.4',
         'quart==0.9.1',
         'rivescript==1.14.9',
+        'rivescript_redis==0.1.0',
         'werkzeug==0.15.4',
     ],
 
