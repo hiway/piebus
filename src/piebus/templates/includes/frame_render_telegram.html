@@ -9,18 +9,18 @@
         <source media="(min-width: 1600px)"
                 srcset="{{url}}">
         <source media="(min-width: 1200px)"
-                srcset="/resize/1600/{{url}}">
+                srcset="/resize/900/{{url}}">
         <source media="(min-width: 1000px)"
-                srcset="/resize/1200/{{url}}">
+                srcset="/resize/700/{{url}}">
         <source media="(min-width: 700px)"
-                srcset="/resize/700/{{url}}">
+                srcset="/resize/500/{{url}}">
         <source media="(min-width: 500px)"
-                srcset="/resize/700/{{url}}">
-        <source media="(min-width: 400px)"
                 srcset="/resize/400/{{url}}">
-        <source media="(min-width: 300px)"
+        <source media="(min-width: 400px)"
                 srcset="/resize/300/{{url}}">
-        <img src="/resize/240/{{url}}" width="100%" alt="" class="frame-image"/>
+        <source media="(min-width: 300px)"
+                srcset="/resize/200/{{url}}">
+        <img src="/resize/140/{{url}}" width="100%" alt="" class="frame-image"/>
       </picture>
     @ elif url.endswith('.oga')
       <video playsinline controls="controls" preload="metadata" class="audio">

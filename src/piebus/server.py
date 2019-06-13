@@ -25,10 +25,6 @@ from quart import (
     url_for,
 )
 from werkzeug.utils import secure_filename
-
-from . import (
-    PATH_CURRENT
-)
 from .api import PiebusAPI, ensure_db, Kind
 from .utils import render_markdown
 
