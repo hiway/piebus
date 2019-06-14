@@ -123,24 +123,36 @@ def humanize_ts(timestamp=False):
         if second_diff < 10:
             return "just now"
         if second_diff < 60:
-            return str(int(second_diff)) + " seconds ago"
+            seconds = int(second_diff)
+            s = '' if seconds < 2 else 's'
+            return f"{seconds} second{s} ago"
         if second_diff < 120:
             return "a minute ago"
         if second_diff < 3600:
-            return str(int(second_diff / 60)) + " minutes ago"
+            minutes = int(second_diff / 60)
+            s = '' if minutes < 2 else 's'
+            return f"{minutes} minute{s} ago"
         if second_diff < 7200:
             return "an hour ago"
         if second_diff < 86400:
-            return str(int(second_diff / 3600)) + " hours ago"
+            hours = int(second_diff / 3600)
+            s = '' if hours < 2 else 's'
+            return f"{hours} hour{s} ago"
     if day_diff == 1:
-        return "Yesterday"
+        return "yesterday"
     if day_diff < 7:
-        return str(day_diff) + " days ago"
+        return f"{day_diff} days ago"
     if day_diff < 31:
-        return str(int(day_diff / 7)) + " weeks ago"
+        weeks = int(day_diff / 7)
+        s = '' if weeks < 2 else 's'
+        return f"{weeks} week{s} ago"
     if day_diff < 365:
-        return str(int(day_diff / 30)) + " months ago"
-    return str(int(day_diff / 365)) + " years ago"
+        months = int(day_diff / 30)
+        s = '' if months < 2 else 's'
+        return f"{months} month{s} ago"
+    years = int(day_diff / 365)
+    s = '' if years < 2 else 's'
+    return f"{years} year{s} ago"
 
 
 app.jinja_env.filters['humanize'] = humanize_ts
@@ -149,7 +161,6 @@ app.jinja_env.filters['telegram_markdown'] = telegram_markdown
 app.jinja_env.line_statement_prefix = '@'
 app.jinja_env.line_comment_prefix = '#'
 
-print(app.jinja_options.items())
 
 @app.route('/register/', methods=['GET', 'POST'])
 @ensure_database
