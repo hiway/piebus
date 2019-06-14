@@ -286,14 +286,6 @@ async def live():
     return await render('live.html', frames=frames, Kind=Kind)
 
 
-@app.route('/search/', methods=['GET', 'POST'])
-async def search():
-    query = await query_or_form_field(request, 'q', 'nothing')
-    return await render('page.html',
-                        title='search',
-                        post=f'you searched for: {query}')
-
-
 @app.route('/frame/create/', methods=['GET', 'POST'])
 @login_required
 async def frame_create():
@@ -320,6 +312,26 @@ async def frame_detail(uuid):
 @login_required
 async def list_frames():
     frames = await api.list_frames(limit=100)
+    if await intercooler_request(request):
+        return await render('includes/frames.html', frames=frames, Kind=Kind)
+    return await render('frames.html', frames=frames, Kind=Kind)
+
+
+@app.route('/frames/ftsindex/', methods=['GET', 'POST'])
+@login_required
+async def ftsindex_frames():
+    await api.index_frames()
+    return redirect(url_for('live'))
+
+
+@app.route('/search/', methods=['GET', 'POST'])
+async def search():
+    form = await request.form
+    query = await query_or_form_field(request, 'q', 'awesome')
+    if session.get('logged_in'):
+        frames = await api.search_frames(query)
+    else:
+        frames = await api.search_public_frames(query)
     if await intercooler_request(request):
         return await render('includes/frames.html', frames=frames, Kind=Kind)
     return await render('frames.html', frames=frames, Kind=Kind)

@@ -9,6 +9,7 @@ from json import JSONDecodeError
 from uuid import uuid4
 
 import bcrypt
+import peewee
 from peewee import (
     Model,
     CharField,
@@ -20,7 +21,7 @@ from peewee import (
 )
 from playhouse.sqlite_ext import (
     SqliteExtDatabase,
-)
+    FTSModel)
 from pysyncobj import SyncObj, replicated
 from asgiref.sync import sync_to_async
 
@@ -70,7 +71,7 @@ class Frame(BaseModel):
     def jdata(self):
         try:
             if self.data:
-                return json.loads(self.data)
+                return dict(json.loads(self.data))
         except JSONDecodeError:
             print('cannot decode data', self.data)
             pass
@@ -80,11 +81,36 @@ class Frame(BaseModel):
     def jmeta(self):
         try:
             if self.meta:
-                return json.loads(self.meta)
+                return dict(json.loads(self.meta))
         except JSONDecodeError:
             print('cannot decode meta', self.meta)
             pass
         return {}
+
+
+class FTSEntry(FTSModel):
+    content = TextField()
+
+    class Meta:
+        database = db
+
+    @classmethod
+    def index_frame(cls, frame: Frame):
+        try:
+            existing = cls.get_or_none(docid=frame.id)
+            if frame.name == 'telegram-message':
+                content = '\n'.join([frame.jdata.get('text', ''), frame.jdata.get('caption', ''), frame.tags])
+            else:
+                content = '\n'.join([frame.name, str(frame.data), frame.tags])
+            if not content.strip():
+                return
+            if existing:
+                existing.update(content=content)
+            else:
+                cls.create(docid=frame.id, content=content)
+        except peewee.OperationalError:
+            cls.create_table()
+            cls.index_frame(frame)
 
 
 class Kind(object):
@@ -193,10 +219,35 @@ class PiebusAPI(SyncObj):
                                                         publish=publish, render=render,
                                                         source=source, tags=tags,
                                                         sync=True)
+        await sync_to_async(FTSEntry.index_frame)(frame)
         return frame
 
     async def list_frames(self, limit=10):
         frames = Frame.select().order_by(Frame.timestamp.desc()).limit(limit)
+        return frames
+
+    @replicated
+    def _index_frames(self):
+        frames = Frame.select().order_by(Frame.timestamp.desc())
+        for frame in frames:
+            FTSEntry.index_frame(frame)
+
+    async def index_frames(self):
+        await sync_to_async(self._index_frames)(sync=True)
+        return True
+
+    async def search_frames(self, query):
+        frames = Frame \
+            .select() \
+            .join(FTSEntry, on=(Frame.id == FTSEntry.docid)) \
+            .where(FTSEntry.match(query)).order_by(Frame.timestamp.desc())
+        return frames
+
+    async def search_public_frames(self, query):
+        frames = Frame \
+            .select() \
+            .join(FTSEntry, on=(Frame.id == FTSEntry.docid)) \
+            .where((FTSEntry.match(query)) & (Frame.publish == True)).order_by(Frame.timestamp.desc())
         return frames
 
     async def list_public_frames(self, limit=10):
