@@ -30,11 +30,12 @@ body {
 
 .wrapper {
   height: 100vh;
-  width: 100vw;
+  width: 100%;
+  overflow: hide;
   display: grid;
   grid-gap: 0;
   grid-template-columns: auto;
-  grid-template-rows: 2em auto 2em;
+  grid-template-rows: 2.2rem auto 2.2rem;
   grid-template-areas:
     "search"
     "content"
@@ -77,12 +78,9 @@ body {
   background-color: var( --clr-darkblue );
 }
 
-.search form {
-  padding: 0.3rem 0.5rem;
-}
-
 .search input {
-  height: 1.2rem;
+  font-size: 1.2rem;
+  height: 2.2rem;
   width: 100%;
 }
 

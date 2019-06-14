@@ -326,7 +326,6 @@ async def ftsindex_frames():
 
 @app.route('/search/', methods=['GET', 'POST'])
 async def search():
-    form = await request.form
     query = await query_or_form_field(request, 'q', 'awesome')
     if session.get('logged_in'):
         frames = await api.search_frames(query)

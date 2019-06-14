@@ -17,13 +17,15 @@
     }
 
     .wrapper {
-      display: grid;
       height: 100vh;
       width: 100vw;
+      overflow: hide;
+      display: grid;
       grid-gap: 0;
       grid-template-columns: auto;
-      grid-template-rows: auto 4em;
+      grid-template-rows: 2rem auto 2rem;
       grid-template-areas:
+        "search"
         "content"
         "nav";
     }
@@ -39,6 +41,10 @@
 
     .footer {
       display: none;
+    }
+
+    .search {
+      grid-area: search;
     }
     </style>
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/hilite.css') }}"/>
