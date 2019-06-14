@@ -5,10 +5,6 @@
 {% block content_title %}{{ title }}{% endblock %}
 
 {% block content %}
-{% if session.logged_in %}
-<h2>Create Frame:</h2>
-{% include "includes/frame_form.html" %}
-{% endif %}
 <h2>Recent:</h2>
 <div id="recent">
     {% for frame in frames %}
