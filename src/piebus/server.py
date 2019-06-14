@@ -232,14 +232,12 @@ def favicon():
 
 
 @app.route('/.well-known/security.txt')
-@lru_cache(maxsize=8)
 def security():
     return send_from_directory(
         app.config['CONTENT_FOLDER'], 'security.txt')
 
 
 @app.route('/robots.txt')
-@lru_cache(maxsize=8)
 def robots():
     return send_from_directory(
         app.config['CONTENT_FOLDER'], 'robots.txt')
