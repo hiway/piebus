@@ -1,7 +1,5 @@
-<li class="navli">
-    <form action="{{ url_for('search') }}" class="nav-form"
-          id="search-form" method="get" role="search">
-        <input class="form-control" name="q" placeholder="Search" type="text"
-               value="{% if search %}{{ search }}{% endif %}">
-    </form>
-</li>
+<form action="{{ url_for('search') }}" class="nav-search"
+      id="search-form" method="get" role="search">
+    <input class="form-control" name="q" placeholder="Search" type="text"
+           value="{% if search %}{{ search }}{% endif %}">
+</form>

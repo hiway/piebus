@@ -34,8 +34,9 @@ body {
   display: grid;
   grid-gap: 0;
   grid-template-columns: auto;
-  grid-template-rows: auto 4em;
+  grid-template-rows: 2em auto 4em;
   grid-template-areas:
+    "search"
     "content"
     "nav";
 }
@@ -68,6 +69,20 @@ body {
   font-size: 1.2rem;
   color: white;
   text-decoration: none;
+}
+
+.search {
+  grid-area: search;
+  width: 100%;
+  background-color: var( --clr-darkblue );
+}
+
+.search form {
+  padding: 0.2rem 0.5rem;
+}
+
+.search input {
+  width: 100%;
 }
 
 .content {
@@ -153,11 +168,11 @@ video.audio {
 
 @media only screen and (min-width: 600px) {
   .wrapper {
-    grid-template-columns: auto;
+    grid-template-columns: 50% 30% 20%;
     grid-template-rows: 4em auto;
     grid-template-areas:
-      "nav"
-      "content";
+      "nav nav search"
+      "content content content";
   }
 
   video, img, .frame-text {
@@ -169,6 +184,9 @@ video.audio {
     padding: 1rem 2rem;
   }
 
+  .search form {
+    padding: 1.2rem 1rem;
+  }
 
   .footer {
     color: var( --clr-blue );

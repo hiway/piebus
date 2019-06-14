@@ -71,8 +71,10 @@
             <li class="nav-li"><a href="{{ url_for('admin') }}"><span class="link-txt">Admin</span></a></li>
             <li class="nav-li"><a href="{{ url_for('logout') }}"><span class="link-txt">Log out</span></a></li>
             {% endif %}
-            @ include "includes/search_form.html"
         </ul>
+    </div>
+    <div class="search">
+        @ include "includes/search_form.html"
     </div>
 </div>
 </body>
