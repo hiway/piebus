@@ -23,9 +23,10 @@ html {
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    background-color: var( --clr-white );
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  background-color: var( --clr-white );
 }
 
 .wrapper {
@@ -167,7 +168,7 @@ video.audio {
 
 @media only screen and (min-width: 600px) {
   .wrapper {
-    grid-template-columns: 50% 30% 20%;
+    grid-template-columns: 35% 35% 30%;
     grid-template-rows: 4em auto;
     grid-template-areas:
       "nav nav search"
@@ -188,7 +189,7 @@ video.audio {
   }
 
   .search form {
-    padding: 1.2rem 1rem;
+    padding: 0.8rem 1rem;
   }
 
   .footer {
