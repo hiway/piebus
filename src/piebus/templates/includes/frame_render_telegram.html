@@ -5,6 +5,9 @@
   @ elif data.media_url
     @ with url = data.media_url
     @ if url.endswith('.jpg') or url.endswith('.png') or url.endswith('.webp')
+      @ if data.location
+        <a href="https://www.openstreetmap.org/?mlat={{ data.location.latitude }}&mlon={{ data.location.longitude }}#map=13/{{ data.location.latitude }}/{{ data.location.longitude }}" >
+      @ endif
       <picture>
         <source media="(min-width: 1600px)"
                 srcset="/{{url}}">
@@ -20,8 +23,15 @@
                 srcset="/resize/300/{{url}}">
         <source media="(min-width: 300px)"
                 srcset="/resize/200/{{url}}">
-        <img src="/resize/140/{{url}}" width="100%" alt="" class="frame-image"/>
+        @ if data.location and data.venue
+        <img src="/resize/140/{{url}}" width="100%" alt="{{ data.venue.title }} {{ data.venue.address }}" class="frame-image"/>
+        @ else
+        <img src="/resize/140/{{url}}" width="100%" alt="{{data.caption}}" class="frame-image"/>
+        @ endif
       </picture>
+      @ if data.location
+        </a>
+      @ endif
     @ elif url.endswith('.oga')
       <video playsinline controls="controls" preload="metadata" class="audio">
         <source src="/{{url}}" type="audio/ogg">
@@ -38,8 +48,14 @@
     {{data}}
   @ endif
 
-  @ if data.caption
-    <p class="frame-caption">{{data.caption}}</p>
+  @ if data.caption or data.location
+    <p class="frame-caption">
+        @ if data.location and data.venue
+          {{ data.venue.title }} {{ data.venue.address }}
+        @ else
+          {{data.caption}}
+        @ endif
+    </p>
   @ endif
 
   @ if frame.tags

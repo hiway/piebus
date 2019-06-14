@@ -7,6 +7,7 @@ from aiogram import Bot, Dispatcher, executor, types, filters
 from aiogram.types import ReplyKeyboardRemove
 from aiogram.types.message import ContentType
 from aiogram.utils.executor import Executor, log, _setup_callbacks
+from asgiref.sync import sync_to_async
 from piebus import conf
 
 from piebus.api import Kind
@@ -54,6 +55,8 @@ async def messages(message: types.Message):
     if path:
         data.update({'media_url': path.name})
     frame = await api.create_frame(Kind.event, 'telegram-message', data=data, render='telegram')
+    if 'location' in data:
+        await sync_to_async(frame.fetch_map)()
     markup = types.InlineKeyboardMarkup()
     markup.add(types.InlineKeyboardButton('Public', callback_data=f'frame public {frame.uuid}'))
     markup.add(types.InlineKeyboardButton('Private', callback_data=f'frame private {frame.uuid}'))

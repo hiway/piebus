@@ -36,6 +36,7 @@ setup(
         'quart==0.9.1',
         'peewee==3.9.5',
         'pysyncobj==0.3.4',
+        'smopy==0.0.7',
         'werkzeug==0.15.4',
     ],
 

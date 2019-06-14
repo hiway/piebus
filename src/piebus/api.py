@@ -4,12 +4,14 @@ import datetime
 import hashlib
 import json
 import os
+import smopy
 import traceback
 from json import JSONDecodeError
 from uuid import uuid4
 
 import bcrypt
 import peewee
+from PIL import Image, ImageDraw
 from peewee import (
     Model,
     CharField,
@@ -71,7 +73,7 @@ class Frame(BaseModel):
     def jdata(self):
         try:
             if self.data:
-                return dict(json.loads(self.data))
+                return dict(json.loads(self.data) or {})
         except JSONDecodeError:
             print('cannot decode data', self.data)
             pass
@@ -81,11 +83,48 @@ class Frame(BaseModel):
     def jmeta(self):
         try:
             if self.meta:
-                return dict(json.loads(self.meta))
+                return dict(json.loads(self.meta) or {})
         except JSONDecodeError:
             print('cannot decode meta', self.meta)
             pass
         return {}
+
+    async def fetch_map_async(self):
+        tsurl = """http://c.tile.stamen.com/watercolor/${z}/${x}/${y}.jpg"""
+        data = self.jdata
+        if 'location' in data:
+            lat = data['location'].get('latitude')
+            lon = data['location'].get('longitude')
+            map = await sync_to_async(smopy.Map)((lat - 1, lat + 1., lon - 1, lon + 1), z=4)
+            await sync_to_async(map.save_png)(f'map_{self.uuid}.png', tileserver=tsurl)
+        else:
+            raise KeyError(f'No location data found in frame: {self}')
+
+    def fetch_map(self):
+        data = self.jdata
+        if 'location' in data:
+            lat = data['location'].get('latitude')
+            lon = data['location'].get('longitude')
+            map = smopy.Map((lat - 0.006, lon - 0.038, lat + 0.006, lon + 0.038), z=12,
+                            tileserver="http://tile.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png",
+                            tilesize=512, maxtiles=16)
+            x, y = map.to_pixels(lat, lon)
+            x = int(x)
+            y = int(y)
+            fname = f'map_{self.uuid}.png'
+            map.save_png(f'content/{fname}')
+            img = Image.open(open(f'content/{fname}', 'rb'))
+            draw = ImageDraw.Draw(img)
+            draw.ellipse([(x-10, y-10), (x+10, y+10)], fill=128,  width=10)
+            del draw
+            ffname = f'content/loc_{fname}'
+            img.save(ffname, "PNG")
+            data.update({'media_url': ffname})
+            self.data = json.dumps(data)
+            self.save()
+            return f'loc_{fname}'
+        else:
+            raise KeyError(f'No location data found in frame: {self}')
 
 
 class FTSEntry(FTSModel):

@@ -160,7 +160,7 @@ app.jinja_env.filters['humanize'] = humanize_ts
 app.jinja_env.filters['markdown'] = render_markdown
 app.jinja_env.filters['telegram_markdown'] = telegram_markdown
 app.jinja_env.line_statement_prefix = '@'
-app.jinja_env.line_comment_prefix = '#'
+app.jinja_env.line_comment_prefix = '##'
 
 
 @app.route('/register/', methods=['GET', 'POST'])
