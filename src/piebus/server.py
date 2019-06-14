@@ -10,6 +10,7 @@ import aiofiles
 from functools import lru_cache
 
 from PIL import Image
+from asgiref.sync import sync_to_async
 from piebus import conf
 from piebus.utils import telegram_markdown
 from quart import (
@@ -254,23 +255,19 @@ def content_file(filename):
 
 
 @app.route('/resize/<int:width>/content/<path:filename>')
-def resize_image(width, filename):
+async def resize_image(width, filename):
     filename = secure_filename(filename)
     filename = 'content/' + filename
     if filename and allowed_file(filename):
         size = (width, width)
-        image = Image.open(filename)
+        image = await sync_to_async(Image.open)(filename)
         image.thumbnail(size, Image.ANTIALIAS)
         mem_file = io.BytesIO()
-        if width <= 500:
-            quality = 50
-        elif width <= 900:
-            quality = 70
-        else:
-            quality = 85
-        image.save(mem_file, image.format, quality=quality)
+        quality = 80
+        await sync_to_async(image.save)(mem_file, image.format, quality=quality)
         mem_file.seek(0)
-        return Response(mem_file.read(), content_type=f'image/{image.format}')
+        resp = await sync_to_async(mem_file.read)()
+        return Response(resp, content_type=f'image/{image.format}')
     abort(404)
 
 
