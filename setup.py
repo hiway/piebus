@@ -27,7 +27,7 @@ setup(
         'bcrypt==3.1.6',
         'click==7.0',
         'cookiecutter==1.6.0',
-        'pillow==6.0.0',
+        'pillow==9.0.1',
         'lxml==4.3.3',
         'makeweb==0.1.0',
         'markdown==3.1.1',
