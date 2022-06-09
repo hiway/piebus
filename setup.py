@@ -26,7 +26,7 @@ setup(
         'aiogram==2.1',
         'bcrypt==3.1.6',
         'click==7.0',
-        'cookiecutter==1.6.0',
+        'cookiecutter==2.1.1',
         'pillow==6.0.0',
         'lxml==4.3.3',
         'makeweb==0.1.0',
