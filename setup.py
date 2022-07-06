@@ -28,7 +28,7 @@ setup(
         'click==7.0',
         'cookiecutter==1.6.0',
         'pillow==6.0.0',
-        'lxml==4.3.3',
+        'lxml==4.9.1',
         'makeweb==0.1.0',
         'markdown==3.1.1',
         'newspaper3k==0.2.8',
